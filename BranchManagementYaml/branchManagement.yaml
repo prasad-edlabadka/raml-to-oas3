@@ -1,0 +1,70 @@
+#%RAML 1.0
+title: Branch Management
+
+baseUri: https://www.branch-management.com
+
+securedBy: [customSecurityScheme]
+
+securitySchemes:
+  customSecurityScheme : !include customSecurityScheme.yaml
+    
+mediaType: 
+  - application/json
+
+types:
+  branch : !include branch.yaml
+  branchSummary : !include branchSummary.yaml
+  postReturn : !include postReturn.yaml
+	  
+/branches :
+  get:
+      description: Get a list of summary of all the branches.
+      securedBy: [customSecurityScheme]
+      responses:
+        200 : 
+          body :
+              application/json : 
+                type : array
+                items : 
+                  type : branchSummary
+              
+                
+              
+  post:
+    description : Create a new branch and return branch id.
+    securedBy: [customSecurityScheme]
+    body :
+     application/json :
+      type : branch
+    responses :
+      200 :
+        body :
+         application/json :
+          type : postReturn
+  put:
+    description : Update branch details
+    securedBy: [customSecurityScheme]
+    body :
+     application/json :
+      type : branch
+    responses :
+      200 :
+        body:
+          example :
+            {"message ": "Instance modified"}
+
+  /{id} :
+    get :
+      description : Get branch details of the branch with specified branch id.
+      securedBy: [customSecurityScheme]
+      responses:
+        200 :
+          body :
+            type : branch
+  
+
+
+
+          
+              
+  

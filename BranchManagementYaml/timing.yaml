@@ -1,0 +1,10 @@
+#%RAML 1.0 DataType
+
+properties :
+  startTime : 
+    type : time-only
+    description : The timing at which working hours of branch start.
+
+  endTime : 
+    type : time-only
+    description : The timing at which working hours of branch end.

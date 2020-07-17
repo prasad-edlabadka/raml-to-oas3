@@ -1,0 +1,25 @@
+#%RAML 1.0 DataType
+properties:
+  propertyNumber :
+    type :  number
+    description : The property identifier of branch
+
+  streetName : 
+    type : string
+    description : The name of the street where branch is located
+  
+  city : 
+    type : string
+    description : The name of city where branch is located
+  
+  country : 
+    type : string
+    description : The name of city where branch is located
+  
+  postcode : 
+    type : string
+    description: The UK format passcode consisting of sector+unit
+
+  lat-long : 
+    type : !include location.yaml
+    description: The latitudinal and longitudinal location of branch

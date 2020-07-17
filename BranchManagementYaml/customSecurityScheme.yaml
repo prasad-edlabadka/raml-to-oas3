@@ -1,0 +1,23 @@
+#%RAML 1.0 SecurityScheme
+    
+    type: OAuth 2.0
+    
+    describedBy:
+      queryParameters:
+        access_token:
+          description: Used to send a valid OAuth 2 access token.
+          type: string
+      
+      responses:
+        401:
+          description: 
+              Bad or expired token.
+        403:
+          description: 
+              Bad OAuth request (wrong consumer key, bad nonce, expired
+              timestamp...). 
+    
+    settings:
+      authorizationUri: https://www.branch-management.com/1/oauth2/authorize
+      accessTokenUri: https://api.branch-management.com/1/oauth2/token
+      authorizationGrants: [ authorization_code]

@@ -1,0 +1,32 @@
+#%RAML 1.0 DataType
+properties :
+  id : 
+    type : number
+    description : Then unique BranchID of branch
+  
+  name : 
+    type : string
+    description: The name of branch
+  
+  address : 
+    type : !include address.yaml
+    description: Then address of a branch with format - "property number, street name, city, country,       postcode, and location (latitudinal and longitudinal).
+  
+  timing : 
+    type : !include timing.yaml
+    description : The staring and ending time of a branch.
+  
+  phoneNumber : 
+    type : string
+    minLength: 10
+    maxLength : 10
+    description: The contact number of branch.
+  
+  facilities :
+    type : array
+    items : string
+    description : The list of facilities such as ATM, Cash deposit, personal banking etc. available at the branch.
+  
+  isAccessible: 
+    type : boolean
+    description: Status of whether accessibility is enabled for differently abled people in thee branch.

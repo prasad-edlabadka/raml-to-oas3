@@ -1,0 +1,21 @@
+#%RAML 1.0 DataType
+properties:
+  id :
+    type : number
+    description : Then unique BranchID of branch.
+  
+  name : 
+    type : string
+    description: The name of branch.
+  
+  timing : 
+    type : !include timing.yaml
+    description : The staring and ending time of a branch.
+  
+  postcode : 
+    type : string
+    description: The UK format passcode consisting of sector+unit.
+
+  isAccessible: 
+    type : boolean
+    description: Status of whether accessibility is enabled for differently abled people in thee branch.

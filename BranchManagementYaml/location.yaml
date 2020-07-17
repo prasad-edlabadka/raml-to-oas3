@@ -1,0 +1,9 @@
+#%RAML 1.0 DataType
+properties :
+  lat : 
+    type : number
+    description : The latitudinal location of branch
+  
+  long : 
+    type : number
+    description: The longitudinal location of branch

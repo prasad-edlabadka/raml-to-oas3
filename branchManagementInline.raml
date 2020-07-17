@@ -1,0 +1,189 @@
+#%RAML 1.0
+title: Branch Management
+description: This API specification handles all branch operation.
+baseUri: https://www.branch-management.com
+
+securedBy: [customSecurityScheme]
+
+securitySchemes:
+  customSecurityScheme :
+    type: OAuth 2.0
+    
+    describedBy: 
+      headers:
+        Authorization:
+          description: |
+             Used to send a valid OAuth 2 access token. Do not use
+             with the "access_token" query string parameter.
+          type: string
+      queryParameters: |
+        access_token:
+          description: Used to send a valid OAuth 2 access token.
+          type: string
+      
+      responses:
+        401:
+          description: |
+              Bad or expired token.
+        403:
+          description: |
+              Bad OAuth request (wrong consumer key, bad nonce, expired
+              timestamp...). 
+    
+    settings:
+      authorizationUri: https://www.branch-management.com/1/oauth2/authorize
+      accessTokenUri: https://api.branch-management.com/1/oauth2/token
+      authorizationGrants: [implicit]
+mediaType: 
+  - application/json
+
+types :
+  Time :
+    type : object
+    properties :
+        startTime : 
+          type : time-only
+          description : The timing at which working hours of branch start.
+
+        endTime : 
+          type : time-only
+          description : The timing at which working hours of branch end.
+  Location :
+    type : object
+    properties :
+        lat : 
+          type : number
+          description : The latitudinal location of branch
+  
+        long : 
+          type : number
+          description: The longitudinal location of branch
+  Address : 
+    type : object
+    properties:
+        propertyNumber :
+          type :  number
+          description : The property identifier of branch
+
+        streetName : 
+          type : string
+          description : The name of the street where branch is located
+  
+        city : 
+          type : string
+          description : The name of city where branch is located
+  
+        country : 
+          type : string
+          description : The name of city where branch is located
+  
+        postcode : 
+          type : string
+          description: The UK format passcode consisting of sector+unit
+
+        lat-long : 
+          type : Location
+          description: The latitudinal and longitudinal location of branch
+  Branch :
+    type : object
+    properties :
+        id : 
+          type : number
+          description : Then unique BranchID of branch
+        name : 
+          type : string
+          description: The name of branch
+        address : 
+          type : Address
+          description: Then address of a branch with format - "property number, street name, city, country,       postcode, and location (latitudinal and longitudinal).
+  
+        timing : 
+          type : Time
+          description : The staring and ending time of a branch.
+  
+        phoneNumber : 
+          type : string
+          minLength: 10
+          maxLength : 10
+          description: The contact number of branch.
+  
+        facilities :
+          type : array
+          items : string
+          description : The list of facilities such as ATM, Cash deposit, personal banking etc. available at the branch.
+  
+        isAccessible: 
+          type : boolean
+          description: Status of whether accessibility is enabled for differently abled people in thee branch.
+  BranchSummary :
+    type : object
+    properties :
+        id : 
+          type : number
+          description : Then unique BranchID of branch
+        name : 
+          type : string
+          description: The name of branch
+        timing : 
+          type : Time
+          description : The staring and ending time of a branch.
+        postcode : 
+          type : string
+          description: The UK format passcode consisting of sector+unit.
+        isAccessible: 
+          type : boolean
+          description: Status of whether accessibility is enabled for differently abled people in thee branch.
+  BranchId :
+    type : object
+    properties :
+        id : 
+          type : number
+
+/branches :
+  get:
+      description: Get a list of summary of all the branches.
+      securedBy: [customSecurityScheme]
+      responses:
+        200 :
+          description : OK 
+          body :
+              application/json : 
+                type : BranchSummary
+        400 :
+          description: Bad request
+  post:
+    description : Create a new branch and return branch id.
+    securedBy: [customSecurityScheme]
+    body :
+     application/json :
+      type : Branch
+    responses :
+      200 :
+        description : OK
+        body :
+         application/json :
+          type : BranchId
+      400 :
+        description: Bad request
+  put:
+    description : Update branch details
+    securedBy: [customSecurityScheme]
+    body :
+     application/json :
+      type : Branch
+    responses :
+      200 : 
+        description : OK
+      400 :
+        description: Bad request
+  /{id} :
+    get :
+      description : Get branch details of the branch with specified branch id.
+      securedBy: [customSecurityScheme]
+      responses:
+        200 :
+          description : OK
+          body :
+            type : Branch  
+        400 :
+         description: Bad request 
