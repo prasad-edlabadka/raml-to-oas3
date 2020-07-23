@@ -10,15 +10,16 @@ import java.util.concurrent.ExecutionException;
 import org.apache.log4j.Logger;
 public class Oas30Generation 
 {
-	public static void generateString(String input) throws InterruptedException, ExecutionException 
+	public void generateString(String input) throws InterruptedException, ExecutionException 
 	{
 		Logger logger=Logger.getLogger(Oas30Generation.class);
-		//BasicConfigurator.configure();
-		final WebApiBaseUnit result = Raml10.parse(input).get();
-		final String output = Oas30.generateString(result).get();
-		logger.info(input+'\n'+output);
-  }
-	public static String FileToString(String filePath) 
+		WebApiBaseUnit result = Raml10.parse(input).get();
+		String output = Oas30.generateString(result).get();
+		
+		logger.info(input+"\n"+output);
+    
+    }
+	public String FileToString(String filePath) 
     {
         StringBuilder contentBuilder = new StringBuilder();
         try (BufferedReader br = new BufferedReader(new FileReader(filePath))) 
@@ -37,7 +38,7 @@ public class Oas30Generation
         return contentBuilder.toString();
     }  
 	
-	public static void RecursiveRead(String filepath, String content, String prefix) throws InterruptedException, ExecutionException 
+	public void RecursiveRead(String filepath, String content, String prefix) throws InterruptedException, ExecutionException 
 	{
 		int position = content.indexOf("!include");
 		if(position == -1) {
